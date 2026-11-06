@@ -1,0 +1,136 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:h="clr-namespace:ControleEstoque.Desktop.Helpers">
+
+    <!-- Cores -->
+    <SolidColorBrush x:Key="Primaria" Color="#2563EB"/>
+    <SolidColorBrush x:Key="PrimariaEscura" Color="#1D4ED8"/>
+    <SolidColorBrush x:Key="Escuro" Color="#0F172A"/>
+    <SolidColorBrush x:Key="Fundo" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="Borda" Color="#CBD5E1"/>
+    <SolidColorBrush x:Key="Texto" Color="#0F172A"/>
+    <SolidColorBrush x:Key="TextoSuave" Color="#64748B"/>
+    <SolidColorBrush x:Key="Erro" Color="#DC2626"/>
+    <SolidColorBrush x:Key="Sucesso" Color="#16A34A"/>
+
+    <!-- Conversores -->
+    <BooleanToVisibilityConverter x:Key="BoolVis"/>
+    <h:TipoMovimentacaoConverter x:Key="TipoMov"/>
+    <h:DataLocalConverter x:Key="DataLocal"/>
+
+    <!-- Texto -->
+    <Style x:Key="Titulo" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="0,0,0,14"/>
+    </Style>
+
+    <Style x:Key="Rotulo" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource TextoSuave}"/>
+        <Setter Property="Margin" Value="0,10,0,3"/>
+    </Style>
+
+    <Style x:Key="Cartao" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borda}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="16"/>
+    </Style>
+
+    <!-- Campos -->
+    <Style TargetType="TextBox">
+        <Setter Property="Padding" Value="7,6"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borda}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="PasswordBox">
+        <Setter Property="Padding" Value="7,6"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borda}"/>
+    </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="Padding" Value="7,6"/>
+    </Style>
+
+    <!-- Botões -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource Primaria}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="14,8"/>
+        <Setter Property="Margin" Value="0,0,8,0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fundo" Background="{TemplateBinding Background}"
+                            CornerRadius="6" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fundo" Property="Opacity" Value="0.88"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fundo" Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Secundario" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="#E2E8F0"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+    </Style>
+
+    <Style x:Key="Perigo" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{StaticResource Erro}"/>
+    </Style>
+
+    <Style x:Key="Nav" TargetType="Button">
+        <Setter Property="Foreground" Value="#CBD5E1"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fundo" Background="{TemplateBinding Background}"
+                            CornerRadius="6" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fundo" Property="Background" Value="#1E293B"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Tabelas -->
+    <Style TargetType="DataGrid">
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#E2E8F0"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borda}"/>
+        <Setter Property="RowHeight" Value="32"/>
+        <Setter Property="ColumnHeaderHeight" Value="34"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,81 @@
+<Window x:Class="ControleEstoque.Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Controle de Estoque"
+        Width="1280" Height="780" MinWidth="1000" MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource Fundo}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu lateral: cada botão só aparece para quem tem permissão -->
+        <Border Background="{StaticResource Escuro}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="18,24,18,18">
+                    <TextBlock Text="📦 Estoque" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                    <TextBlock Text="{Binding NomeUsuario}" Foreground="White" Margin="0,16,0,0" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding PerfilUsuario}" Foreground="#94A3B8" FontSize="12"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom" Margin="10,0,10,16">
+                    <Button Style="{StaticResource Nav}" Content="👤  Minha conta"
+                            Command="{Binding IrCommand}" CommandParameter="Conta"/>
+                    <Button Style="{StaticResource Nav}" Content="🚪  Sair" Command="{Binding SairCommand}"/>
+                </StackPanel>
+
+                <StackPanel Margin="10,0">
+                    <Button Style="{StaticResource Nav}" Content="🛒  Vender"
+                            Command="{Binding IrCommand}" CommandParameter="Pdv"
+                            Visibility="{Binding VeVenda, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="📋  Produtos"
+                            Command="{Binding IrCommand}" CommandParameter="Produtos"
+                            Visibility="{Binding VeEstoque, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="🔄  Estoque"
+                            Command="{Binding IrCommand}" CommandParameter="Estoque"
+                            Visibility="{Binding VeEstoque, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="🏷  Categorias"
+                            Command="{Binding IrCommand}" CommandParameter="Categorias"
+                            Visibility="{Binding VeEstoque, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="🚚  Fornecedores"
+                            Command="{Binding IrCommand}" CommandParameter="Fornecedores"
+                            Visibility="{Binding VeGerente, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="🧾  Vendas"
+                            Command="{Binding IrCommand}" CommandParameter="Vendas"
+                            Visibility="{Binding VeGerente, Converter={StaticResource BoolVis}}"/>
+                    <Button Style="{StaticResource Nav}" Content="👥  Usuários"
+                            Command="{Binding IrCommand}" CommandParameter="Usuarios"
+                            Visibility="{Binding VeGerente, Converter={StaticResource BoolVis}}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <DockPanel Grid.Column="1">
+            <!-- Barra de status: mensagens de sucesso/erro da tela atual -->
+            <Border DockPanel.Dock="Bottom" Background="White" BorderBrush="{StaticResource Borda}"
+                    BorderThickness="0,1,0,0" Padding="16,9">
+                <DockPanel>
+                    <ProgressBar DockPanel.Dock="Right" Width="110" Height="4" IsIndeterminate="True"
+                                 Visibility="{Binding Atual.Ocupado, Converter={StaticResource BoolVis}}"/>
+                    <TextBlock Text="{Binding Atual.Mensagem}" TextWrapping="Wrap" Margin="0,0,12,0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource Sucesso}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Atual.MensagemEhErro}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource Erro}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+
+            <!-- A tela exibida é escolhida pelo DataTemplate do tipo do ViewModel atual -->
+            <ContentControl Content="{Binding Atual}"/>
+        </DockPanel>
+    </Grid>
+</Window>
